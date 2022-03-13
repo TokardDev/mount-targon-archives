@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="icon" href="{{ url_for('static',filename='assets/pdp.png') }}">
+    <link rel="stylesheet" href= "{{ url_for('static',filename='style.css') }}" />
+    <title>Mount Targon's archives</title>
+  </head>
+  <body class="wy-body-for-nav bg-dark">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 align-items-center ">
+      <a href="/" class="homeLink d-flex align-items-center mb-3 mb-md-0 me-md-auto text-light text-decoration-none">
+        <img src="{{ url_for('static',filename='assets/pdp.png') }}" class="websiteLogo" alt="website logo">
+        <h1>Mount Targon's archives</h1>
+      </a>
+      <a href="/tuto" style="text-decoration: none;">
+        <button class="boutonMenu nav-link active text-light" style="margin-right:10px;background:#9e9e9e7e">Tuto</button>
+      </a>
+    </header>
+    <div class="tab-content">
+      <div class="tab-pane fade show active text-light" id="home" role="tabpanel" aria-labelledby="home-tab">
+          <ul id="listeProfils">
+            
+            <div class="row mb-3" style="width:100%;max-width:1500px; padding-left:25px"></div>
+             <div class="row mb-3" style="width:100%;max-width:1500px; padding-left:25px">
+
+              <div class="col-1 themed-grid-col", style="background:rgba(209, 209, 209, 0.138);padding-bottom: 10px;padding-top:10px;min-width:200px; border-left: 2px solid rgb(112, 112, 112);">
+                <h5 style="border-bottom: 1px solid white;">{{ user }}</h5>
+                <div><img src="{{ profile['icone'] }}" style="height:100%;width:100%"></div>
+              </div>
+              <div class="col-1 themed-grid-col", style="background:rgba(72, 73, 92, 0.268);padding-bottom: 10px;padding-top:10px;min-width:200px; border-left: 2px solid rgb(63, 65, 77);">
+                <h5 style="border-bottom: 1px solid white;">Stats</h5>
+                <div>lvl {{ profile['niveau'] }}</div>
+                <div>region : {{ profile['region'][7:] }}</div><br>
+                <div>average game length : {{ profile['tempsMoyen'] }}</div>
+
+              </div>
+            </div>
+
+              {% for match in matches %}
+
+              <div class="row mb-3" style="width:100%;max-width:1500px; padding-left:25px">
+
+                <div class="col-1 themed-grid-col", style="background:rgba(209, 209, 209, 0.138);padding-bottom: 10px;padding-top:10px;min-width:200px; border-left: 2px solid rgb(112, 112, 112);">
+                  <h5 style="border-bottom: 1px solid white;">Stats</h5>
+                  <div>Duration : {{ match["duree"] }}</div>
+                  <div>Date : {{ match["dateCreation"][:10] }}</div>
+                  {% if match['win'][0] == true %}
+                  <div class="col-1 themed-grid-col", style="background:rgba(32, 77, 255, 0.371);padding-bottom: 10px;padding-top:10px;min-width:175px; border-left: 2px solid rgba(162, 162, 162, 0.405);">
+                    <h5 style="border-bottom: 1px solid white;">Winners</h5>
+                    <div>Blue</div>
+                  </div>
+                {% else %}
+                <div class="col-1 themed-grid-col", style="background:rgba(255, 11, 11, 0.337);padding-bottom: 10px;padding-top:10px;min-width:175px; border-left: 2px solid rgba(162, 162, 162, 0.405);">
+                  <h5 style="border-bottom: 1px solid white;">Winners</h5>
+                  <div>Red</div>
+                </div>
+                {% endif %}
+                </div>
+
+
+                <div class="col-1 themed-grid-col", style="background:rgba(83, 94, 255, 0.268);padding-bottom: 10px;padding-top:10px;min-width:200px; border-left: 2px solid rgb(86, 96, 163);">
+                  <h5 style="border-bottom: 1px solid white;">BLUE PLAYERS</h5>
+                  <div>{{ match["joueurs"][0] }}</div>
+                  <div>{{ match["joueurs"][1] }}</div>
+                  <div>{{ match["joueurs"][2] }}</div>
+                  <div>{{ match["joueurs"][3] }}</div>
+                  <div>{{ match["joueurs"][4] }}</div>
+                </div>
+
+                <div class="col-1 themed-grid-col", style="background:rgba(83, 94, 255, 0.268);padding-bottom: 10px;padding-top:10px; border-left: 2px solid rgb(86, 96, 163);min-width:200px;">
+                  <h5 style="border-bottom: 1px solid white;">BLUE CHAMPIONS</h5>
+                  <div>{{ match["champions"][0] }}</div>
+                  <div>{{ match["champions"][1] }}</div>
+                  <div>{{ match["champions"][2] }}</div>
+                  <div>{{ match["champions"][3] }}</div>
+                  <div>{{ match["champions"][4] }}</div>
+                </div>
+                <div class="col-1 themed-grid-col", style="background:rgba(48, 53, 126, 0.268);padding-bottom: 10px;padding-top:10px;min-width:200px; border-left: 2px solid rgb(86, 96, 163);">
+                  <h5 style="border-bottom: 1px solid white;">K/D/RATIO BLUE</h5>
+                  <div>{{ match["kills"][0] }} / {{ match["morts"][0] }} / {{ match["kda"][0]|round(2,"floor")}}</div>
+                  <div>{{ match["kills"][1] }} / {{ match["morts"][1] }} / {{ match["kda"][1]|round(2,"floor")}}</div>
+                  <div>{{ match["kills"][2] }} / {{ match["morts"][2] }} / {{ match["kda"][2]|round(2,"floor")}}</div>
+                  <div>{{ match["kills"][3] }} / {{ match["morts"][3] }} / {{ match["kda"][3]|round(2,"floor")}}</div>
+                  <div>{{ match["kills"][4] }} / {{ match["morts"][4] }} / {{ match["kda"][4]|round(2,"floor")}}</div>
+                </div>
+                <div class="col-1 themed-grid-col", style="background:rgba(255, 83, 83, 0.268);padding-bottom: 10px;padding-top:10px;min-width:200px; border-left: 2px solid rgb(163, 86, 86);">
+                  <h5 style="border-bottom: 1px solid white;">RED PLAYERS</h5>
+                  <div>{{ match["joueurs"][5] }}</div>
+                  <div>{{ match["joueurs"][6] }}</div>
+                  <div>{{ match["joueurs"][7] }}</div>
+                  <div>{{ match["joueurs"][8] }}</div>
+                  <div>{{ match["joueurs"][9] }}</div>
+                </div>
+                <div class="col-1 themed-grid-col", style="background:rgba(255, 83, 83, 0.268);padding-bottom: 10px;padding-top:10px; border-left: 2px solid rgb(163, 86, 86);min-width:200px;">
+                  <h5 style="border-bottom: 1px solid white;">RED CHAMPIONS</h5>
+                  <div>{{ match["champions"][5] }}</div>
+                  <div>{{ match["champions"][6] }}</div>
+                  <div>{{ match["champions"][7] }}</div>
+                  <div>{{ match["champions"][8] }}</div>
+                  <div>{{ match["champions"][9] }}</div>
+                </div>
+                <div class="col-1 themed-grid-col", style="background:rgba(150, 54, 54, 0.268);padding-bottom: 10px;padding-top:10px;min-width:200px; border-left: 2px solid rgb(163, 86, 86);">
+                  <h5 style="border-bottom: 1px solid white;">K/D/RATIO RED</h5>
+                  <div>{{ match["kills"][5] }} / {{ match["morts"][5] }} / {{ match["kda"][5]|round(2,"floor")}}</div>
+                  <div>{{ match["kills"][6] }} / {{ match["morts"][6] }} / {{ match["kda"][6]|round(2,"floor")}}</div>
+                  <div>{{ match["kills"][7] }} / {{ match["morts"][7] }} / {{ match["kda"][7]|round(2,"floor")}}</div>
+                  <div>{{ match["kills"][8] }} / {{ match["morts"][8] }} / {{ match["kda"][8]|round(2,"floor")}}</div>
+                  <div>{{ match["kills"][9] }} / {{ match["morts"][9] }} / {{ match["kda"][9]|round(2,"floor")}}</div>
+                </div>
+
+                
+                </div>
+              <!--
+              <div id="d-flex flex-row bd-highlight mb-3">
+                <div id="d-flex flex-column bd-highlight mb-3" class="teamOne">
+                  <div class="p-2 bd-highlight"></div>
+                  <div class="p-2 bd-highlight">{{ match["joueurs"][1] }} | {{ match["champions"][1] }}</div>
+                  <div class="p-2 bd-highlight">{{ match["joueurs"][2] }} | {{ match["champions"][2] }}</div>
+                  <div class="p-2 bd-highlight">{{ match["joueurs"][3] }} | {{ match["champions"][3] }}</div>
+                  <div class="p-2 bd-highlight">{{ match["joueurs"][4] }} | {{ match["champions"][4] }}</div>
+                </div>
+                <div id="d-flex flex-row bd-highlight mb-3"  class="teamTwo">
+                  <div class="p-2 bd-highlight">{{ match["joueurs"][5] }} | {{ match["champions"][5] }}</div>
+                  <div class="p-2 bd-highlight">{{ match["joueurs"][6] }} | {{ match["champions"][6] }}</div>
+                  <div class="p-2 bd-highlight">{{ match["joueurs"][7] }} | {{ match["champions"][7] }}</div>
+                  <div class="p-2 bd-highlight">{{ match["joueurs"][8] }} | {{ match["champions"][8] }}</div>
+                  <div class="p-2 bd-highlight">{{ match["joueurs"][9] }} | {{ match["champions"][9] }}</div>
+                </div>
+              </div>-->
+              {% endfor %}
+        </ul>
+
+        </div>
+      </div>
+    </div>
+    <div class="footerContainer">
+      <footer class="d-flex justify-content-between align-items-center py-3 my-4 border-top flex-fill">
+        <div class="col-md-4 d-flex align-items-center">
+          <a href="index.html" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+            <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
+          </a>
+          <span class="text-muted">Made with <span class="heart"><i class="bi bi-heart-fill"></i></span> by Tokageki & Kyashiw</a><br>
+          based on <a href="http://tokageki.me" style="text-decoration: none;color:white;">tokageki.me</a></span>
+        </div>
+        
+      </footer>
+    </div>
+  </body>
+</html>
