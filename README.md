@@ -1,4 +1,4 @@
-# nsi-lol
+# Targon's archives 
 
 Projet libre fait en classe de NSI
 l'objectif était d'utiliser une DB
